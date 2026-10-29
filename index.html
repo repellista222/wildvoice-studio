@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WildVoice Studio | Year 5 KSSR English</title>
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --primary-dark: #1b5e20;
+      --accent: #f57c00;
+      --bg: #f4f8f3;
+      --card-bg: #ffffff;
+      --text: #2c3e50;
+      --light-gray: #e8f5e9;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 25px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 5px;
+    }
+
+    header p {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .nav-btn {
+      background-color: white;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .nav-btn.active, .nav-btn:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .module-card {
+      display: none;
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+
+    .module-card.active {
+      display: block;
+    }
+
+    h2 {
+      color: var(--primary-dark);
+      border-bottom: 2px solid var(--light-gray);
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    .audio-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin: 15px 0;
+      background: var(--light-gray);
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    .btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .btn-accent {
+      background-color: var(--accent);
+    }
+
+    .btn-accent:hover {
+      background-color: #e65100;
+    }
+
+    .transcript-box {
+      background: #f9f9f9;
+      border-left: 4px solid var(--primary);
+      padding: 12px;
+      margin-top: 10px;
+      display: none;
+      font-style: italic;
+    }
+
+    .quiz-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .quiz-opt {
+      background: #ffffff;
+      border: 2px solid #ccc;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      font-weight: bold;
+      transition: all 0.2s;
+    }
+
+    .quiz-opt:hover {
+      border-color: var(--primary);
+      background: var(--light-gray);
+    }
+
+    .quiz-opt.correct {
+      background-color: #c8e6c9;
+      border-color: #388e3c;
+      color: #1b5e20;
+    }
+
+    .quiz-opt.incorrect {
+      background-color: #ffcdd2;
+      border-color: #d32f2f;
+      color: #b71c1c;
+    }
+
+    .feedback {
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    .template-builder {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    label {
+      font-weight: bold;
+      color: var(--primary-dark);
+    }
+
+    select, input, textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .script-preview {
+      background: #fff8e1;
+      border-left: 4px solid var(--accent);
+      padding: 15px;
+      border-radius: 6px;
+      font-weight: 500;
+      white-space: pre-wrap;
+    }
+
+    iframe.vocaroo-frame {
+      width: 100%;
+      height: 220px;
+      border: none;
+      border-radius: 8px;
+      margin-top: 15px;
+    }
+
+    .gallery-item {
+      background: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🌿 WildVoice Studio</h1>
+    <p>Year 5 English (Unit 3: Wild Life) — Integrated Listening & Speaking</p>
+  </header>
+
+  <div class="container">
+    <nav>
+      <button class="nav-btn active" onclick="switchModule('module1')">Module 1: Safari Trail (Listening)</button>
+      <button class="nav-btn" onclick="switchModule('module2')">Module 2: Studio Lab (Speaking)</button>
+    </nav>
+
+    <!-- MODULE 1: SAFARI TRAIL -->
+    <section id="module1" class="module-card active">
+      <h2>Module 1: Safari Trail — Superlative Audio Quizzes</h2>
+      <p>Listen to the audio clues about wild animals and select the correct answer. Adjust playback speed if needed!</p>
+
+      <div style="margin-top: 20px;">
+        <h3 id="clue-number">Clue 1 of 5</h3>
+        
+        <div class="audio-controls">
+          <button class="btn" onclick="playAudio(1.0)">▶ Play Audio (1.0x)</button>
+          <button class="btn btn-accent" onclick="playAudio(0.75)">🐢 Play Slower (0.75x)</button>
+          <button class="btn" style="background:#666;" onclick="toggleTranscript()">📝 Toggle Transcript</button>
+        </div>
+
+        <div id="transcript" class="transcript-box"></div>
+
+        <div class="quiz-options" id="quiz-options"></div>
+
+        <div id="feedback" class="feedback"></div>
+
+        <button id="next-btn" class="btn btn-accent" style="margin-top: 20px; display: none;" onclick="nextQuestion()">Next Clue ➔</button>
+      </div>
+    </section>
+
+    <!-- MODULE 2: STUDIO LAB -->
+    <section id="module2" class="module-card">
+      <h2>Module 2: Studio Lab — Wildlife Podcast Builder</h2>
+      <p>Script your 1-minute wildlife podcast using superlatives, then record your voice using embedded Vocaroo!</p>
+
+      <div class="template-builder">
+        <div class="form-group">
+          <label for="animal-select">1. Choose an Animal:</label>
+          <select id="animal-select" onchange="updateScript()">
+            <option value="Cheetah">Cheetah</option>
+            <option value="Blue Whale">Blue Whale</option>
+            <option value="African Elephant">African Elephant</option>
+            <option value="Giraffe">Giraffe</option>
+            <option value="Ostrich">Ostrich</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="superlative-1">2. Select Primary Superlative:</label>
+          <select id="superlative-1" onchange="updateScript()">
+            <option value="the fastest land animal">the fastest land animal</option>
+            <option value="the largest creature on Earth">the largest creature on Earth</option>
+            <option value="the heaviest land mammal">the heaviest land mammal</option>
+            <option value="the tallest animal in the wild">the tallest animal in the wild</option>
+            <option value="the largest bird in the world">the largest bird in the world</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="superlative-2">3. Select Secondary Trait:</label>
+          <select id="superlative-2" onchange="updateScript()">
+            <option value="the most powerful legs">the most powerful legs</option>
+            <option value="the loudest underwater calls">the loudest underwater calls</option>
+            <option value="the strongest trunk">the strongest trunk</option>
+            <option value="the longest neck">the longest neck</option>
+            <option value="the biggest eggs">the biggest eggs</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>4. Generated Podcast Script Preview:</label>
+          <div id="script-preview" class="script-preview"></div>
+        </div>
+      </div>
+
+      <hr style="margin: 20px 0;">
+
+      <h3>🎙️ Record Your Podcast</h3>
+      <p>Use the embedded Vocaroo recorder below. Record your voice, click Save, copy your link, and paste it to share with your class!</p>
+
+      <iframe class="vocaroo-frame" src="https://vocaroo.com/?embed" title="Vocaroo Voice Recorder"></iframe>
+
+      <div class="form-group" style="margin-top: 15px;">
+        <label for="vocaroo-link">5. Paste Your Saved Vocaroo Link Here:</label>
+        <div style="display:flex; gap: 10px;">
+          <input type="text" id="vocaroo-link" placeholder="https://vocaroo.com/1xXxXxXxXx" style="flex: 1;">
+          <button class="btn" onclick="submitPodcast()">Submit Link</button>
+        </div>
+      </div>
+
+      <div id="submissions-gallery" style="margin-top: 25px;">
+        <h3>📻 Shared Audio Gallery</h3>
+        <div id="gallery-list"></div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Module Navigation
+    function switchModule(moduleId) {
+      document.querySelectorAll('.module-card').forEach(card => card.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(moduleId).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    // Module 1 Data (Unit 3 Superlatives)
+    const questions = [
+      {
+        clue: "This animal is the fastest land creature in the world. It can run up to 120 kilometers per hour.",
+        options: ["Cheetah", "Lion", "Leopard", "Zebra"],
+        correct: 0
+      },
+      {
+        clue: "This marine mammal is the largest animal to ever exist on Earth. It is even bigger than the largest dinosaur.",
+        options: ["Shark", "Blue Whale", "Dolphin", "Orca"],
+        correct: 1
+      },
+      {
+        clue: "This creature is the heaviest land animal. It has the strongest trunk and giant ears.",
+        options: ["Rhino", "Hippo", "African Elephant", "Giraffe"],
+        correct: 2
+      },
+      {
+        clue: "This animal is the tallest species in the wild. It has the longest neck to reach high leaves.",
+        options: ["Giraffe", "Ostrich", "Camel", "Kangaroo"],
+        correct: 0
+      },
+      {
+        clue: "This bird cannot fly, but it is the largest bird on the planet and lays the biggest eggs.",
+        options: ["Penguin", "Eagle", "Ostrich", "Falcon"],
+        correct: 2
+      }
+    ];
+
+    let currentQ = 0;
+
+    function loadQuestion() {
+      const q = questions[currentQ];
+      document.getElementById('clue-number').innerText = `Clue ${currentQ + 1} of ${questions.length}`;
+      document.getElementById('transcript').innerText = `"${q.clue}"`;
+      document.getElementById('transcript').style.display = 'none';
+      document.getElementById('feedback').innerText = '';
+      document.getElementById('next-btn').style.display = 'none';
+
+      const optionsContainer = document.getElementById('quiz-options');
+      optionsContainer.innerHTML = '';
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('div');
+        btn.className = 'quiz-opt';
+        btn.innerText = opt;
+        btn.onclick = () => checkAnswer(idx, btn);
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    function playAudio(speed) {
+      window.speechSynthesis.cancel();
+      const text = questions[currentQ].clue;
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = speed;
+      utterance.lang = 'en-US';
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function toggleTranscript() {
+      const box = document.getElementById('transcript');
+      box.style.display = box.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function checkAnswer(selectedIdx, element) {
+      const q = questions[currentQ];
+      const allOpts = document.querySelectorAll('.quiz-opt');
+      allOpts.forEach(opt => opt.onclick = null);
+
+      if (selectedIdx === q.correct) {
+        element.classList.add('correct');
+        document.getElementById('feedback').innerHTML = "<span style='color:green;'>✓ Correct! Great listening skills.</span>";
+      } else {
+        element.classList.add('incorrect');
+        allOpts[q.correct].classList.add('correct');
+        document.getElementById('feedback').innerHTML = `<span style='color:red;'>✗ Incorrect. The correct answer is ${q.options[q.correct]}.</span>`;
+      }
+      document.getElementById('next-btn').style.display = 'inline-block';
+    }
+
+    function nextQuestion() {
+      currentQ++;
+      if (currentQ < questions.length) {
+        loadQuestion();
+      } else {
+        document.getElementById('clue-number').innerText = "Module 1 Completed! 🎉";
+        document.getElementById('quiz-options').innerHTML = "<p>Congratulations! You have mastered all listening clues. Proceed to Module 2 to record your podcast!</p>";
+        document.getElementById('next-btn').style.display = 'none';
+        document.getElementById('feedback').innerText = '';
+      }
+    }
+
+    // Module 2 Script Builder
+    function updateScript() {
+      const animal = document.getElementById('animal-select').value;
+      const sup1 = document.getElementById('superlative-1').value;
+      const sup2 = document.getElementById('superlative-2').value;
+
+      const script = `Welcome to WildVoice Podcast!\n\nToday, we are talking about the ${animal}.\nDid you know that the ${animal} is ${sup1}?\nIt also features ${sup2} in the wild kingdom.\n\nThank you for listening to our wildlife report!`;
+      
+      document.getElementById('script-preview').innerText = script;
+    }
+
+    function submitPodcast() {
+      const link = document.getElementById('vocaroo-link').value.trim();
+      const animal = document.getElementById('animal-select').value;
+
+      if (!link) {
+        alert("Please paste your Vocaroo link first!");
+        return;
+      }
+
+      const list = document.getElementById('gallery-list');
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      item.innerHTML = `<strong>${animal} Podcast Submission:</strong> <a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>`;
+      list.prepend(item);
+
+      document.getElementById('vocaroo-link').value = '';
+      alert("Podcast link submitted to class gallery!");
+    }
+
+    // Initial Setup
+    window.onload = () => {
+      loadQuestion();
+      updateScript();
+    };
+  </script>
+</body>
+</html>
